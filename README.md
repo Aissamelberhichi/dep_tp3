@@ -1,1 +1,13 @@
 CMD ["python", "app.py"]
+steps:
+ - name: Checkout code
+ uses: actions/checkout@v3
+ - name: Log in to Docker Hub
+ uses: docker/login-action@v2
+ with:
+ username: ${{ secrets.DOCKER_USERNAME }}
+ password: ${{ secrets.DOCKER_PASSWORD }}
+ - name: Build Docker image
+ run: docker build -t ${{ secrets.DOCKER_USERNAME }}/my-app:latest .
+ - name: Push Docker image
+run: docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
